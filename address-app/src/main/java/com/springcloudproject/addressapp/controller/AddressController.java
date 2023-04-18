@@ -8,12 +8,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 public class AddressController {
     @Autowired
     private AddressService addressService;
 
+    @GetMapping("/address")
+    public ResponseEntity<List<AddressResponse>> getAllAddress() {
+        List<AddressResponse> addressReponse = addressService.getAllAddress();
+        return ResponseEntity.status(HttpStatus.OK).body(addressReponse);
+    }
     @GetMapping("/address/{employeeId}")
     public ResponseEntity<AddressResponse> findAddressByEmployeeId(@PathVariable("employeeId") int id) {
         log.info("Getting address with id : {}", id);

@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,6 +64,18 @@ public class AddressServiceImpl implements AddressService {
             AddressResponse addressResponse1 = modelMapper.map(address1, AddressResponse.class);
             return addressResponse1;
         }
+    }
+
+    @Override
+    public List<AddressResponse> getAllAddress() {
+        List<Address> addresslist = addressRepo.findAll();
+        List<AddressResponse> addressResponseList= new ArrayList<AddressResponse>();
+        for(Address address:addresslist){
+            AddressResponse addressResponse=new AddressResponse();
+            addressResponse=modelMapper.map(address,AddressResponse.class);
+            addressResponseList.add(addressResponse);
+        }
+        return addressResponseList;
     }
 }
 
